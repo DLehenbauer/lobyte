@@ -1,9 +1,7 @@
 {
   "compilerOptions": {
-    "target": "es6",
-    "module": "commonjs",
     "sourceMap": true,
-    "outDir": "./build/",
+    "target": "esnext",
     "forceConsistentCasingInFileNames": true,
     "noEmitOnError": true,
     "noFallthroughCasesInSwitch": true,
@@ -11,6 +9,11 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "removeComments": true,
-    "strict": true
-  }
+    "strict": true,
+    "declaration": true,
+    "outDir": "."
+  },
+  "files": [
+    "src/index.ts"
+  ]
 }
