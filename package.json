@@ -1,38 +1,39 @@
 {
   "name": "lobyte",
-  "version": "0.0.2",
-  "description": "A small JavaScript utility library for low-level byte manipulation.",
-  "main": "lib/index",
-  "types": "lib/index",
+  "version": "0.0.3",
+  "description": "A JavaScript microlibrary for low-level byte manipulation.",
+  "main": "dist/index",
+  "types": "dist/index",
   "scripts": {
-    "clean": "rimraf build && mkdir build && rimraf lib && mkdir lib",
-    "build:test": "tsc -p test/",
-    "build:lib": "tsc -p src/",
-    "build": "npm run build:lib && npm run build:test",
+    "clean": "rimraf dist && mkdir dist",
+    "build": "tsc -p tsconfig.json",
     "prebuild": "npm run clean",
     "prepublishOnly": "npm run build && npm run test && npm run lint",
     "lint": "tslint -c ./tslint.json './**/*.ts*'",
-    "lint:fix": "tslint -c ./tslint.json './**/*.ts*' --fix",
-    "test": "mocha build --require source-map-support/register"
+    "test": "mocha test --require ts-node/register",
+    "bench": "ts-node bench/index.ts"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/DLehenbauer/lobyte.git"
   },
   "author": "DLehenbauer@users.noreply.github.com",
-  "license": "Apache-2.0",
+  "license": "ISC",
   "bugs": {
     "url": "https://github.com/DLehenbauer/lobyte/issues"
   },
   "homepage": "https://github.com/DLehenbauer/lobyte#readme",
   "devDependencies": {
+    "@types/benchmark": "^1.0.31",
     "@types/chai": "^4.0.10",
     "@types/mocha": "^2.2.45",
+    "benchmark": "^2.1.4",
     "chai": "^4.1.2",
     "cpx": "^1.5.0",
     "mocha": "^4.0.1",
     "rimraf": "^2.6.2",
     "source-map-support": "^0.5.0",
+    "ts-node": "^7.0.1",
     "tslint": "^5.8.0",
     "typescript": "^2.6.2"
   },
