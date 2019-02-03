@@ -3,7 +3,7 @@ const zero = '0';
 export function pretty(value: any) {
     switch (typeof value) {
         case 'number':
-            if (Math.trunc(value) !== value) {
+            if (Math.trunc(value) !== value || Math.abs(value) === Infinity) {
                 return value.toString();
             }
 

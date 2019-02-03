@@ -2,6 +2,7 @@ import { expect } from 'chai';
 import { Signedness } from '../src';
 import { pretty } from './pretty';
 import { INumericType, types } from './types';
+import { getTestValues } from './values';
 
 function getMin(type: INumericType) {
     // Int54 is an IEEE 754 double precision floating-point number.
@@ -35,22 +36,18 @@ for (const name of Object.keys(types)) {
         const type: INumericType = (types as any)[name];
         const min = getMin(type);
         const max = getMax(type);
-        const includes = [min, max];
-        const excludes = [-Infinity, min - 1, undefined, null, NaN, '0', 0.5, max + 1, +Infinity];
+        const test = (t: INumericType, value: number) => t.min <= value && value <= t.max && Math.trunc(value) === value;
 
         // Note: Unsigned and twos-complement integers, testing min/max is also implicitly testing
         //       signedness and bitSize (or at least ensuring they are consistent).
         it(`min = ${pretty(min)}`, () =>  { expect(type.min).to.equal(min); });
         it(`max = ${pretty(max)}`, () =>  { expect(type.max).to.equal(max); });
+        const values = getTestValues(type);
         describe('test', () => {
-            for (const value of includes) {
-                it(`${pretty(value)} -> true`, () => {
-                    expect(type.test(value)).to.equal(true);
-                });
-            }
-            for (const value of excludes) {
-                it(`${pretty(value)} -> false`, () => {
-                    expect(type.test(value as any)).to.equal(false);
+            for (const value of values) {
+                const expected = test(type, value);
+                it(`${pretty(value)} -> ${expected}`, () => {
+                    expect(type.test(value)).to.equal(expected);
                 });
             }
         });

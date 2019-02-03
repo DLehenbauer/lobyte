@@ -1,6 +1,7 @@
 import { expect } from 'chai';
 import { pretty } from './pretty';
 import { encodables, IEncodableType, xint32 } from './types';
+import { getTestValues } from './values';
 
 const zero = new Uint8Array(xint32.byteSize * 4);
 const bytes = new Uint8Array(zero.length);
@@ -33,7 +34,7 @@ function roundTripLE(type: IEncodableType, byteOffset: number, value: number) {
 for (const name of Object.keys(encodables)) {
     describe(name, () => {
         const type: IEncodableType = (encodables as any)[name];
-        const values: any[] = [ type.min - 1, type.min, 0, '1', NaN, undefined, 0.5, type.max, type.max + 1];
+        const values = getTestValues(type);
 
         describe('read/write aligned', () => {
             for (const value of values) {
